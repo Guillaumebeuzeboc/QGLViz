@@ -2,6 +2,7 @@
 #include <QGLWidget>
 #include <QDebug>
 #include <QMouseEvent>
+//#include <QWheelEvent>
 #include <QTimer>
 #include <cmath>
 #include <GL/glu.h>
@@ -98,6 +99,16 @@ class GLWidget : public QGLWidget{
             is_dragging_ = false;
     }
 
+    void wheelEvent(QWheelEvent *event){
+        double wheel_position = event->delta();
+
+        if(std::abs(wheel_position) > 700){return;}
+        trans_tmp_ << 1.0, 0.0, 0.0, 0.0,
+                     0.0, 1.0, 0.0, 0.0,
+                     0.0, 0.0, 1.0, wheel_position*0.0008,
+                     0.0, 0.0, 0.0, 1.0;
+        trans_ = trans_tmp_ * trans_;
+    }
     void paintGrid(){
             glLineWidth(5.0);
             glBegin(GL_LINES);
