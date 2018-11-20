@@ -2,7 +2,6 @@
 #include <QGLWidget>
 #include <QDebug>
 #include <QMouseEvent>
-//#include <QWheelEvent>
 #include <QTimer>
 #include <cmath>
 #include <GL/glu.h>
@@ -55,18 +54,28 @@ class GLWidget : public QGLWidget{
 
     void mouseMoveEvent(QMouseEvent *event){
 
-        if (event->buttons() & Qt::LeftButton) {
+        if (event->buttons() & Qt::MidButton) {
+            if (is_dragging_){
+                double tmp_rot_x_ = (event->y() - last_dragging_y_) * 0.003;
+                trans_tmp_ << cos(tmp_rot_x_), -sin(tmp_rot_x_), 0.0, 0.0,
+                              sin(tmp_rot_x_),  cos(tmp_rot_x_), 0.0, 0.0,
+                              0.0            ,              0.0, 1.0, 0.0,
+                              0.0            ,              0.0, 0.0, 1.0;
+                trans_ = trans_tmp_ * trans_;
+            }else{
+                is_dragging_ = true;
+            }
+        }
+        else if (event->buttons() & Qt::LeftButton) {
            if(is_dragging_) {
                trans_tmp_ << 1.0, 0.0, 0.0, (event->x() - last_dragging_x_) * 0.005,
                              0.0, 1.0, 0.0, -(event->y() - last_dragging_y_) * 0.005,
                              0.0, 0.0, 1.0, 0.0,
                              0.0, 0.0, 0.0, 1.0;
                trans_ = trans_tmp_ * trans_;
-
            }
            else{
                 is_dragging_ = true;
-
            }
         }
         else if (event->buttons() & Qt::RightButton) {
@@ -86,7 +95,6 @@ class GLWidget : public QGLWidget{
            }
            else{
                 is_dragging_ = true;
-
            }
 
         }
