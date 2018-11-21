@@ -1,4 +1,4 @@
-project(qt5test)
+project(QGLViz)
 cmake_minimum_required(VERSION 2.8.12)
 set (CMAKE_CXX_STANDARD 11)
 
@@ -13,6 +13,6 @@ find_package(OpenGL)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 # executable
-add_executable(qt5test src/main.cpp)
-qt5_use_modules(qt5test Widgets OpenGL)
-target_link_libraries(qt5test ${QT_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(QGLViz src/main.cpp)
+qt5_use_modules(QGLViz Widgets OpenGL)
+target_link_libraries(QGLViz ${QT_LIBRARIES} ${OPENGL_LIBRARIES})
