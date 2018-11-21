@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <QTimer>
-#include <cmath>
+#include <math.h>
 #include <GL/glu.h>
 #include <iostream>
 #include <chrono>
@@ -111,9 +111,10 @@ class GLWidget : public QGLWidget{
         double wheel_position = event->delta();
 
         if(std::abs(wheel_position) > 700){return;}
+        double distance_to_zero = sqrt(pow(trans_(0,3),2) + pow(trans_(1,3),2) + pow(trans_(2,3) - 10,2));
         trans_tmp_ << 1.0, 0.0, 0.0, 0.0,
                      0.0, 1.0, 0.0, 0.0,
-                     0.0, 0.0, 1.0, wheel_position*0.0008,
+                     0.0, 0.0, 1.0, wheel_position*0.0003*distance_to_zero,
                      0.0, 0.0, 0.0, 1.0;
         trans_ = trans_tmp_ * trans_;
     }
