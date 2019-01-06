@@ -22,9 +22,7 @@ install(TARGETS QGLViz
   DESTINATION bin)
 
 set(CMAKE_PROJECT_NAME "QGLViz")
-set(MAJOR_VERSION "1")
-set(MINOR_VERSION "0")
-set(PATCH_VERSION "0")
+include(${CMAKE_CURRENT_SOURCE_DIR}/version.cmake)
 if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 include(InstallRequiredSystemLibraries)
 set(CPACK_SET_DESTDIR "on")
